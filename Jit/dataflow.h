@@ -203,9 +203,9 @@ void DataFlowAnalyzer<T>::RunAnalysis(bool forward) {
       blocks_.begin(),
       blocks_.end(),
       std::back_inserter(blocks),
-      std::bind1st(
+      std::bind(
           std::not_equal_to<DataFlowBlock*>(),
-          forward ? entry_block_ : exit_block_));
+          forward ? entry_block_ : exit_block_, std::placeholders::_2));
 
   jit::util::BitVector bv(num_bits_);
   while (!blocks.empty()) {
